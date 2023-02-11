@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, FlatList, Pressable, StyleSheet } from "react-native";
+import {
+  Text,
+  TextInput,
+  View,
+  FlatList,
+  Pressable,
+  StyleSheet,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import {
   completeElements,
@@ -18,10 +26,13 @@ import Titles from "../../sharedComponents/Titles";
 import LoadingComponent from "../../sharedComponents/LoadingComponent";
 import { renderCapsule } from "./renderCapsule";
 
+const initialDayCount = 50;
+
 const AdminReporteRapido = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [rawItems, setRawItems] = useState([]);
+  const [daysBack, setDaysBack] = useState(initialDayCount);
 
   const [filter, setFilter] = useState([
     entities.obra,
@@ -32,7 +43,7 @@ const AdminReporteRapido = () => {
   useEffect(() => {
     const loadItems = async () => {
       let queryObject = {
-        [commonAttrs.fechaCreacionRango]: getLastNDaysRange(15),
+        [commonAttrs.fechaCreacionRango]: getLastNDaysRange(daysBack),
         [commonAttrs.jornalState]: jornalStates.validated,
       };
       let query = createQuery(queryObject);
@@ -125,7 +136,14 @@ const AdminReporteRapido = () => {
       <View style={styles.body}>
         <View style={styles.titlesAndActions}>
           <Titles titleText="Reporte Rapido Jornales" />
-          <Tree />
+          <View style={styles.actions}>
+            <SetTimeFrame
+              initial={daysBack}
+              set={setDaysBack}
+              refresh={() => setLoading(true)}
+            />
+            <Tree />
+          </View>
         </View>
 
         <View style={styles.listContainer}>
@@ -173,6 +191,26 @@ const consolidarJornales = (objects, first, second, third, value) => {
   return result;
 };
 
+const SetTimeFrame = ({ initial, set, refresh }) => {
+  return (
+    <View style={localStyles.timeFrameContainer}>
+      <View style={localStyles.timeFrameTextWrapper}>
+        <Text>Dias atras: </Text>
+      </View>
+      <View style={localStyles.timeFrameInputWrapper}>
+        <TextInput
+          style={localStyles.timeFrameInputWrapperText}
+          value={initial}
+          onChangeText={set}
+        />
+        <Pressable onPress={() => refresh()}>
+          <Ionicons name="refresh-circle" size={20} color={palette.B1} />
+        </Pressable>
+      </View>
+    </View>
+  );
+};
+
 const localStyles = StyleSheet.create({
   treeContainer: {
     flexDirection: "row",
@@ -182,8 +220,32 @@ const localStyles = StyleSheet.create({
   treeButton: {
     margin: 5,
     padding: 5,
+    paddingTop: 3,
+    paddingBottom: 7,
     borderRadius: 10,
     borderWidth: 2,
     borderColor: palette.R4,
+  },
+  timeFrameContainer: {
+    flexDirection: "row",
+    margin: 5,
+    marginRight: 30,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: palette.white,
+    borderWidth: 2,
+    borderColor: palette.B1,
+  },
+  timeFrameTextWrapper: {},
+  timeFrameInputWrapper: {
+    flexDirection: "row",
+    backgroundColor: palette.neutral,
+    borderRadius: 5,
+  },
+  timeFrameInputWrapperText: {
+    width: 40,
+    textAlign: "center",
+    paddingBottom: 3,
   },
 });

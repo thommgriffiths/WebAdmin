@@ -36,12 +36,11 @@ const styles = StyleSheet.create({
   },
   actionsFilter: {
     backgroundColor: palette.R3,
-    height: 50,
-    borderRadius: 50,
     margin: 5,
+    padding: 10,
+    borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
-    padding: 5,
   },
 
   actionsFilterText: {

@@ -7,7 +7,6 @@ import { queryFSElements } from "../../Core/Firebase/FirebaseFirestoreManager";
 import { getLoggedUser } from "../../Core/util/globalStore";
 import { palette } from "../../Core/colors";
 
-import FiltrarJornales from "../../sharedScreens/Jornal/FiltrarJornal";
 import FiltrarPedidoDeObra from "../../sharedScreens/PedidoDeObra/FiltrarPedidoDeObra";
 import LoadingComponent from "../LoadingComponent";
 import ModalButtons from "./ModalButtons";
@@ -60,10 +59,7 @@ const FilterModal = ({ modalParams, setParams, setElements }) => {
     >
       <View style={style.centeredView}>
         <View style={style.modalView}>
-          <ScrollView
-            style={style.scrolllView}
-            contentContainerStyle={style.scrolllViewContentContainer}
-          >
+          <View style={style.scrolllView}>
             {loading ? (
               <View style={style.loadingContainer}>
                 <LoadingComponent />
@@ -87,7 +83,7 @@ const FilterModal = ({ modalParams, setParams, setElements }) => {
                 </View>
               </>
             )}
-          </ScrollView>
+          </View>
         </View>
       </View>
     </Modal>
@@ -120,8 +116,11 @@ const style = StyleSheet.create({
     flexGrow: 0,
   },
   scrolllViewContentContainer: {},
-  formContainer: {},
+  formContainer: {
+    zIndex: 25000,
+  },
   buttonsWrapper: {
+    zIndex: 10000,
     marginTop: 10,
     marginBottom: 5,
   },

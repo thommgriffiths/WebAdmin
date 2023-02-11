@@ -5,9 +5,6 @@ import { updateElement } from "../../Core/util/functions";
 import { entities } from "../../Core/util/entities";
 import { palette } from "../../Core/colors";
 
-import EditarPedidoDeObra from "../../sharedScreens/PedidoDeObra/EditarPedidoDeObra";
-import EditarJornal from "../../sharedScreens/Jornal/EditarJornal";
-import EditarPedidoDeReintegro from "../../sharedScreens/PedidoDeReintegro/EditarPedidoDeReintegro";
 import EditarObra from "../../sharedScreens/Obra/EditarObra";
 import EditarRubro from "../../sharedScreens/Rubro/EditarRubro";
 import LoadingComponent from "../LoadingComponent";

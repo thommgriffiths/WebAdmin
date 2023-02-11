@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Text, View } from "react-native";
 
-import {
-  entities,
-  commonAttrs,
-  POTypes,
-  POStates,
-} from "../../Core/util/entities";
+import { entities, commonAttrs } from "../../Core/util/entities";
 import { createQuery } from "../../Core/util/functions";
 import styles from "../styles/Editar.style";
 
-import DropDownSelectMobile from "../../sharedComponents/DropDownSelectMobile";
+import DropdownSelect from "../../sharedComponents/DropDownSelect";
 
 const FiltrarPedidoDeObra = ({ setSearchParams }) => {
   const [obra, setObra] = useState(null);
@@ -27,6 +22,7 @@ const FiltrarPedidoDeObra = ({ setSearchParams }) => {
     };
     const newQuery = createQuery(queryParams);
     setSearchParams(newQuery);
+    console.log("current query", newQuery);
   }, [obra, rubro, tipoDePedido, estado]);
 
   return (
@@ -36,37 +32,36 @@ const FiltrarPedidoDeObra = ({ setSearchParams }) => {
       </View>
 
       <View style={styles.formWrapper}>
-        <View style={styles.inputWrapper}>
-          <DropDownSelectMobile
-            options={entities.obra}
-            placeholder="Seleccione una obra"
-            remote
-            set={(value) => setObra(value)}
+        <View style={[styles.inputWrapper, { zIndex: 20000 }]}>
+          <DropdownSelect
+            placeholder="Seleccione Obra"
+            action={setObra}
+            category={entities.obra}
+            props={{ stackOrder: 20000 }}
           />
         </View>
-
-        <View style={styles.inputWrapper}>
-          <DropDownSelectMobile
-            options={entities.rubro}
-            placeholder="Seleccione un rubro"
-            remote
-            set={(value) => setRubro(value)}
+        <View style={[styles.inputWrapper, { zIndex: 19800 }]}>
+          <DropdownSelect
+            placeholder="Seleccione Rubro"
+            action={setRubro}
+            category={entities.rubro}
+            props={{ stackOrder: 19800 }}
           />
         </View>
-
-        <View style={styles.inputWrapper}>
-          <DropDownSelectMobile
-            options={POTypes}
-            placeholder="Tipo de Pedido"
-            set={(value) => setTipoDePedido(value)}
+        <View style={[styles.inputWrapper, { zIndex: 19500 }]}>
+          <DropdownSelect
+            placeholder="Seleccione tipo de pedido"
+            action={setTipoDePedido}
+            category={commonAttrs.tipoPedidoObra}
+            props={{ stackOrder: 19500 }}
           />
         </View>
-
-        <View style={styles.inputWrapper}>
-          <DropDownSelectMobile
-            options={POStates}
-            placeholder="Estado del pedido"
-            set={(value) => setEstado(value)}
+        <View style={[styles.inputWrapper, { zIndex: 19200 }]}>
+          <DropdownSelect
+            placeholder="Seleccione estado del pedido"
+            action={setEstado}
+            category={commonAttrs.POState}
+            props={{ stackOrder: 19200 }}
           />
         </View>
       </View>

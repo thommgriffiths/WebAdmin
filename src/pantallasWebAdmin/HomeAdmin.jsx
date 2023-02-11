@@ -6,7 +6,7 @@ import Header from "../sharedComponents/Header";
 const AdminHome = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Header backButton />
+      <Header />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}
